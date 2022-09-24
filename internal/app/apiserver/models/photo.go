@@ -10,5 +10,6 @@ type Photo struct {
 
 type PhotoData struct {
 	Type *string `json:"type"`
+	Name *string `json:"name"`
 	Link *string `json:"link"`
 }

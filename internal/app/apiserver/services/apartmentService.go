@@ -43,7 +43,7 @@ func GetApartmentByID(id *string) (models.Apartment, error) {
 	return result, nil
 }
 
-func AppendApartmentPhoto(apartment *models.Apartment, fileId *string, _type *string) error {
+func AppendApartmentPhoto(apartment *models.Apartment, fileId *string, _type *string, name *string) error {
 	var ctx, _ = context.WithTimeout(context.TODO(), 100*time.Second)
 	var upd bson.D
 
