@@ -18,6 +18,7 @@ const (
 	ACCOUNTS         = "Accounts"
 	USERS            = "Users"
 	COMMUNITY        = "Community"
+	BUILDINGS        = "Buildings"
 	EVENT            = "Event"
 
 	PHOTO_DB     = "HackNUPhoto"

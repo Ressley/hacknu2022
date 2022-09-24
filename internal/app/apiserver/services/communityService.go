@@ -51,5 +51,4 @@ func GetCommunityByName(name *string) (models.Community, error) {
 		return result, err
 	}
 	return result, nil
-
 }
