@@ -10,7 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-//APIserver ...
+// APIserver ...
 type APIserver struct {
 	config *Config
 	logger *logrus.Logger
@@ -18,7 +18,7 @@ type APIserver struct {
 	store  *store.Store
 }
 
-//New ...
+// New ...
 func New(config *Config) *APIserver {
 	return &APIserver{
 		config: config,
@@ -27,7 +27,7 @@ func New(config *Config) *APIserver {
 	}
 }
 
-//Start ...
+// Start ...
 func (s *APIserver) Start() error {
 	if err := s.configureLogger(); err != nil {
 		return err
@@ -55,8 +55,10 @@ func (s *APIserver) configureRouter() {
 
 	s.router.HandleFunc("/signup", controllers.SignUp).Methods("POST")
 	s.router.HandleFunc("/login", controllers.Login).Methods("POST")
-	s.router.HandleFunc("/download", controllers.DownloadFile).Methods("GET")
-	s.router.HandleFunc("/upload", controllers.UploadFile).Methods("POST")
+	s.router.HandleFunc("/download/photo", controllers.DownloadPhoto).Methods("GET")
+	s.router.HandleFunc("/upload/photo", controllers.UploadPhoto).Methods("POST")
+	s.router.HandleFunc("/download/file", controllers.DownloadFile).Methods("GET")
+	s.router.HandleFunc("/upload/file", controllers.UploadFile).Methods("POST")
 	s.router.HandleFunc("/community", controllers.CreateCommunity).Methods("POST")
 	s.router.HandleFunc("/follow", controllers.Follow).Methods("POST")
 	s.router.HandleFunc("/unfollow", controllers.Unfollow).Methods("POST")

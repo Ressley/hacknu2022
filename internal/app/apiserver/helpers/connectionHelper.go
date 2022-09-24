@@ -21,6 +21,7 @@ const (
 	EVENT            = "Event"
 
 	PHOTO_DB     = "HackNUPhoto"
+	FILE_DB      = "HackNUFile"
 	FS_FILES     = "fs.files"
 	FS_CHUNKS    = "fs.chunks"
 	HASHED_PHOTO = "hashed.photo"

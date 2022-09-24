@@ -48,7 +48,7 @@ func CreateEvent(response http.ResponseWriter, request *http.Request) {
 			return
 		}
 
-		fileid, err := services.UploadFile(handler.Filename, fileBytes)
+		fileid, err := services.UploadPhoto(handler.Filename, fileBytes)
 		if err != nil {
 			response.WriteHeader(http.StatusMethodNotAllowed)
 			response.Write([]byte(`Error ` + err.Error()))

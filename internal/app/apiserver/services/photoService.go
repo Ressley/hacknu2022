@@ -20,11 +20,12 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/gridfs"
 )
 
-var filesCollection *mongo.Collection = client.Database(helpers.PHOTO_DB).Collection(helpers.FS_FILES)
-var chunksCollection *mongo.Collection = client.Database(helpers.PHOTO_DB).Collection(helpers.FS_CHUNKS)
+var photoCollection *mongo.Collection = client.Database(helpers.PHOTO_DB).Collection(helpers.FS_FILES)
+
+// var chunksCollection *mongo.Collection = client.Database(helpers.PHOTO_DB).Collection(helpers.FS_CHUNKS)
 var hashedPhotoCollection *mongo.Collection = client.Database(helpers.PHOTO_DB).Collection(helpers.HASHED_PHOTO)
 
-func UploadFile(filename string, data []byte) (string, error) {
+func UploadPhoto(filename string, data []byte) (string, error) {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
 	var result models.Photo
@@ -76,7 +77,7 @@ func UploadFile(filename string, data []byte) (string, error) {
 	return strs[1], nil
 }
 
-func DownloadFile(id string) ([]byte, error) {
+func DownloadPhoto(id string) ([]byte, error) {
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
 	var results bson.D
@@ -84,7 +85,7 @@ func DownloadFile(id string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	_err := filesCollection.FindOne(ctx, bson.D{{Key: "_id", Value: fileID}}).Decode(&results)
+	_err := photoCollection.FindOne(ctx, bson.D{{Key: "_id", Value: fileID}}).Decode(&results)
 	if _err != nil {
 		return nil, err
 	}
