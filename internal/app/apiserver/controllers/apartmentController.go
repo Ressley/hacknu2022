@@ -40,3 +40,15 @@ func CreateApartment(response http.ResponseWriter, request *http.Request) {
 	json, _ := json.Marshal(apartment)
 	response.Write([]byte(`{"data":` + string(json) + `}`))
 }
+
+func DeleteApartment(response http.ResponseWriter, request *http.Request) {
+	query := request.URL.Query()
+	id := query.Get("id")
+	apartment, err := services.GetApartmentByID(&id)
+	if err != nil {
+		response.WriteHeader(http.StatusMethodNotAllowed)
+		response.Write([]byte(`{"Error":"apartment with ` + id + ` id does not exist"}`))
+		return
+	}
+	err = services.DeleteApartment(&(apartment.ID))
+}

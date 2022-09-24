@@ -36,6 +36,18 @@ func CreateBuilding(response http.ResponseWriter, request *http.Request) {
 	response.Write([]byte(`{"data":` + string(json) + `}`))
 }
 
+func DeleteBuilding(response http.ResponseWriter, request *http.Request) {
+	query := request.URL.Query()
+	id := query.Get("id")
+	building, err := services.GetBuildingByID(&id)
+	if err != nil {
+		response.WriteHeader(http.StatusMethodNotAllowed)
+		response.Write([]byte(`{"Error":"building with ` + id + ` id does not exist"}`))
+		return
+	}
+	err = services.DeleteBuilding(&(building.ID))
+}
+
 func GetBuilding(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("Content-Type", "application/json")
 	var building models.BuildingResponse

@@ -110,6 +110,17 @@ func GetBuildingByID(id *string) (models.Building, error) {
 	return result, nil
 }
 
+func DeleteBuilding(id *primitive.ObjectID) error {
+	var ctx, _ = context.WithTimeout(context.TODO(), 100*time.Second)
+	filter := bson.D{{Key: "_id", Value: id}}
+
+	_, err := buildingCollection.DeleteOne(ctx, filter)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func ListBuildings() ([]models.BuildingMeta, error) {
 	var ctx, _ = context.WithTimeout(context.TODO(), 100*time.Second)
 	result := []models.BuildingMeta{}

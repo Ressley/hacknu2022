@@ -65,3 +65,14 @@ func AppendApartmentPhoto(apartment *models.Apartment, fileId *string, _type *st
 	}
 	return nil
 }
+
+func DeleteApartment(id *primitive.ObjectID) error {
+	var ctx, _ = context.WithTimeout(context.TODO(), 100*time.Second)
+	filter := bson.D{{Key: "_id", Value: id}}
+
+	_, err := apartmentCollection.DeleteOne(ctx, filter)
+	if err != nil {
+		return err
+	}
+	return nil
+}
