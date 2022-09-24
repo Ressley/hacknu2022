@@ -7,3 +7,8 @@ type Photo struct {
 	Fileid *string            `bson:"fileid"`
 	Hash   *string            `bson:"hash"`
 }
+
+type PhotoData struct {
+	Type *string `json:"type"`
+	Link *string `json:"link"`
+}

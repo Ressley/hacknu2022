@@ -10,6 +10,7 @@ import (
 func UploadPhoto(response http.ResponseWriter, request *http.Request) {
 	request.ParseMultipartForm(10 << 20)
 	file, handler, err := request.FormFile("photo")
+	_type := request.FormValue("type")
 	if err != nil {
 		response.WriteHeader(http.StatusMethodNotAllowed)
 		response.Write([]byte(`Error Retrieving the File `))
@@ -35,11 +36,11 @@ func UploadPhoto(response http.ResponseWriter, request *http.Request) {
 
 	building, err := services.GetBuildingByID(&id)
 	if err == nil {
-		services.AppendBuildingPhoto(&building, &fileId)
+		services.AppendBuildingPhoto(&building, &fileId, &_type)
 	}
 	apartment, err := services.GetApartmentByID(&id)
 	if err == nil {
-		services.AppendApartmentPhoto(&apartment, &fileId)
+		services.AppendApartmentPhoto(&apartment, &fileId, &_type)
 	}
 
 	response.Write([]byte(`{"fileid" : "` + fileId + `"}`))

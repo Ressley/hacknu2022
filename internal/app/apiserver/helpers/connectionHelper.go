@@ -14,6 +14,7 @@ var mongoOnce sync.Once
 
 const (
 	CONNECTIONSTRING = "mongodb://localhost:27017"
+	HOST             = "localhost"
 	DB               = "HackNUDB"
 	ACCOUNTS         = "Accounts"
 	USERS            = "Users"

@@ -9,15 +9,15 @@ type Apartment struct {
 	Price       int                `json:"price" validate:"required"`
 	Count       int                `json:"count" validate:"required"`
 	Area        int                `json:"area" validate:"required"`
-	Photo       []string           `json:"photo"`
+	Photo       []PhotoData        `json:"photo"`
 }
 
 type ApartmentResponse struct {
-	Id          string   `json:"id"`
-	Building_id string   `json:"building_id"`
-	Rooms       int      `json:"rooms"`
-	Price       int      `json:"price"`
-	Count       int      `json:"count"`
-	Area        int      `json:"area"`
-	Photo       []string `json:"photo"`
+	Id          string      `json:"id"`
+	Building_id string      `json:"building_id"`
+	Rooms       int         `json:"rooms"`
+	Price       int         `json:"price"`
+	Count       int         `json:"count"`
+	Area        int         `json:"area"`
+	Photo       []PhotoData `json:"photo"`
 }

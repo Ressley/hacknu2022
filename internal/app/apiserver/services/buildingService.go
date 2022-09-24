@@ -153,13 +153,17 @@ func AppendApartment(apartment_id *primitive.ObjectID, building *models.Building
 	return nil
 }
 
-func AppendBuildingPhoto(building *models.Building, fileId *string) error {
+func AppendBuildingPhoto(building *models.Building, fileId *string, _type *string) error {
 	var ctx, _ = context.WithTimeout(context.TODO(), 100*time.Second)
 	var upd bson.D
 
 	filter := bson.D{{Key: "_id", Value: building.ID}}
-
-	building.Photo = append(building.Photo, *fileId)
+	link := "http://" + helpers.HOST + ":8080/download/photo?fileid=" + fmt.Sprint(*fileId)
+	photo := models.PhotoData{
+		Type: _type,
+		Link: &link,
+	}
+	building.Photo = append(building.Photo, photo)
 
 	upd = bson.D{
 		primitive.E{Key: "photo", Value: building.Photo},

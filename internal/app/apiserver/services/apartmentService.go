@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/Ressley/hacknu/internal/app/apiserver/helpers"
@@ -42,13 +43,17 @@ func GetApartmentByID(id *string) (models.Apartment, error) {
 	return result, nil
 }
 
-func AppendApartmentPhoto(apartment *models.Apartment, fileId *string) error {
+func AppendApartmentPhoto(apartment *models.Apartment, fileId *string, _type *string) error {
 	var ctx, _ = context.WithTimeout(context.TODO(), 100*time.Second)
 	var upd bson.D
 
 	filter := bson.D{{Key: "_id", Value: apartment.ID}}
-
-	apartment.Photo = append(apartment.Photo, *fileId)
+	link := "http://" + helpers.HOST + ":8080/download/photo?fileid=" + fmt.Sprint(*fileId)
+	photo := models.PhotoData{
+		Type: _type,
+		Link: &link,
+	}
+	apartment.Photo = append(apartment.Photo, photo)
 
 	upd = bson.D{
 		primitive.E{Key: "photo", Value: apartment.Photo},
