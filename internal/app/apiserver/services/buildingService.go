@@ -76,3 +76,22 @@ func ListBuildings() ([]models.BuildingMeta, error) {
 
 	return result, nil
 }
+
+func AppendApartment(apartment_id *primitive.ObjectID, building *models.Building) error {
+	var ctx, _ = context.WithTimeout(context.TODO(), 100*time.Second)
+	var upd bson.D
+
+	filter := bson.D{{Key: "_id", Value: building.ID}}
+
+	building.Apartments = append(building.Apartments, apartment_id.Hex())
+
+	upd = bson.D{
+		primitive.E{Key: "apartments", Value: building.Apartments},
+	}
+	updater := bson.D{primitive.E{Key: "$set", Value: upd}}
+	_, err = buildingCollection.UpdateOne(ctx, filter, updater)
+	if err != nil {
+		return err
+	}
+	return nil
+}

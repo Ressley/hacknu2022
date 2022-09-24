@@ -19,6 +19,7 @@ const (
 	USERS            = "Users"
 	COMMUNITY        = "Community"
 	BUILDINGS        = "Buildings"
+	APARTMENT        = "Apartments"
 	EVENT            = "Event"
 
 	PHOTO_DB     = "HackNUPhoto"

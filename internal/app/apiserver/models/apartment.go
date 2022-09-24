@@ -8,4 +8,6 @@ type Apartment struct {
 	Rooms       int                `json:"rooms" validate:"required"`
 	Price       int                `json:"price" validate:"required"`
 	Count       int                `json:"count" validate:"required"`
+	Area        int                `json:"area" validate:"required"`
+	Photo       []string           `json:"photo"`
 }

@@ -32,8 +32,8 @@ func CreateBuilding(response http.ResponseWriter, request *http.Request) {
 		response.Write([]byte(`{"Error" : "building with this name allready exists"}`))
 		return
 	}
-	json.NewEncoder(response).Encode(building)
-	return
+	json, _ := json.Marshal(building)
+	response.Write([]byte(`{"data":` + string(json) + `}`))
 }
 
 func GetBuilding(response http.ResponseWriter, request *http.Request) {
@@ -53,7 +53,8 @@ func GetBuilding(response http.ResponseWriter, request *http.Request) {
 		response.Write([]byte(`{"Error":"building with ` + building_id + ` id does not exist"}`))
 		return
 	}
-	json.NewEncoder(response).Encode(building)
+	json, _ := json.Marshal(building)
+	response.Write([]byte(`{"data":` + string(json) + `}`))
 }
 
 func ListBuildings(response http.ResponseWriter, request *http.Request) {
@@ -61,5 +62,6 @@ func ListBuildings(response http.ResponseWriter, request *http.Request) {
 	var buildings []models.BuildingMeta
 
 	buildings, err = services.ListBuildings()
-	json.NewEncoder(response).Encode(buildings)
+	json, _ := json.Marshal(buildings)
+	response.Write([]byte(`{"data":` + string(json) + `}`))
 }

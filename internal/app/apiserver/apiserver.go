@@ -62,6 +62,8 @@ func (s *APIserver) configureRouter() {
 	s.router.HandleFunc("/building", controllers.CreateBuilding).Methods("POST")
 	s.router.HandleFunc("/building", controllers.GetBuilding).Methods("GET")
 	s.router.HandleFunc("/buildings", controllers.ListBuildings).Methods("GET")
+	s.router.HandleFunc("/apartment", controllers.CreateApartment).Methods("POST")
+	// s.router.HandleFunc("/buildings", controllers.ListBuildings).Methods("GET")
 	s.router.HandleFunc("/community", controllers.CreateCommunity).Methods("POST")
 	s.router.HandleFunc("/follow", controllers.Follow).Methods("POST")
 	s.router.HandleFunc("/unfollow", controllers.Unfollow).Methods("POST")

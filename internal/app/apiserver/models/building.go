@@ -11,8 +11,9 @@ type Building struct {
 	Name         *string            `json:"name" validate:"required,min=2,max=100"`
 	Latitude     *string            `json:"latitude" validate:"required"`
 	Longitude    *string            `json:"longitude" validate:"required"`
-	Created_at   time.Time          `json:"created_at" validate:"required"`
+	Started_at   time.Time          `json:"started_at" validate:"required"`
 	Ends_at      time.Time          `json:"ends_at" validate:"required"`
+	Floors       *int               `json:"floors" validate:"required"`
 	Neighborhood []string           `json:"neighborhood"`
 	Apartments   []string           `json:"apartments"`
 }
