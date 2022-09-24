@@ -23,13 +23,26 @@ func UploadPhoto(response http.ResponseWriter, request *http.Request) {
 		response.Write([]byte(`Error ` + err.Error()))
 		return
 	}
-	id, err := services.UploadPhoto(handler.Filename, fileBytes)
+	fileId, err := services.UploadPhoto(handler.Filename, fileBytes)
 	if err != nil {
 		response.WriteHeader(http.StatusMethodNotAllowed)
 		response.Write([]byte(`Error ` + err.Error()))
 		return
 	}
-	response.Write([]byte(`{"fileid" : "` + id + `"}`))
+
+	query := request.URL.Query()
+	id := query.Get("id")
+
+	building, err := services.GetBuildingByID(&id)
+	if err == nil {
+		services.AppendBuildingPhoto(&building, &fileId)
+	}
+	apartment, err := services.GetApartmentByID(&id)
+	if err == nil {
+		services.AppendApartmentPhoto(&apartment, &fileId)
+	}
+
+	response.Write([]byte(`{"fileid" : "` + fileId + `"}`))
 }
 
 func DownloadPhoto(response http.ResponseWriter, request *http.Request) {

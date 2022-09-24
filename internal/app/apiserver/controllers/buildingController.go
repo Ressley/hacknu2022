@@ -37,17 +37,13 @@ func CreateBuilding(response http.ResponseWriter, request *http.Request) {
 }
 
 func GetBuilding(response http.ResponseWriter, request *http.Request) {
-	// err := middleware.Authentication(response, request)
-	// if err != nil {
-	// 	return
-	// }
 	response.Header().Set("Content-Type", "application/json")
-	var building models.Building
+	var building models.BuildingResponse
 
 	query := request.URL.Query()
 	building_id := query.Get("building_id")
 
-	building, err = services.GetBuildingByID(&building_id)
+	building, err = services.GetBuilding(&building_id)
 	if err != nil {
 		response.WriteHeader(http.StatusMethodNotAllowed)
 		response.Write([]byte(`{"Error":"building with ` + building_id + ` id does not exist"}`))

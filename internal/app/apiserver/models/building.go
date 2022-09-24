@@ -16,6 +16,22 @@ type Building struct {
 	Floors       *int               `json:"floors" validate:"required"`
 	Neighborhood []string           `json:"neighborhood"`
 	Apartments   []string           `json:"apartments"`
+	Photo        []string           `json:"photo"`
+}
+
+type BuildingResponse struct {
+	ID           primitive.ObjectID    `json:"id"`
+	Name         *string               `json:"name"`
+	Latitude     *string               `json:"latitude"`
+	Longitude    *string               `json:"longitude"`
+	Started_at   time.Time             `json:"started_at"`
+	Ends_at      time.Time             `json:"ends_at"`
+	Floors       *int                  `json:"floors"`
+	Area         string                `json:"area"`
+	MinPrice     *int                  `json:"min_price"`
+	Neighborhood []string              `json:"neighborhood"`
+	Photo        []string              `json:"photo"`
+	Apartments   [][]ApartmentResponse `json:"apartments"`
 }
 
 type BuildingMeta struct {

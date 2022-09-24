@@ -11,3 +11,13 @@ type Apartment struct {
 	Area        int                `json:"area" validate:"required"`
 	Photo       []string           `json:"photo"`
 }
+
+type ApartmentResponse struct {
+	Id          string   `json:"id"`
+	Building_id string   `json:"building_id"`
+	Rooms       int      `json:"rooms"`
+	Price       int      `json:"price"`
+	Count       int      `json:"count"`
+	Area        int      `json:"area"`
+	Photo       []string `json:"photo"`
+}
