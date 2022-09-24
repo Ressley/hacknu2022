@@ -187,6 +187,32 @@ func AppendBuildingPhoto(building *models.Building, fileId *string, _type *strin
 	return nil
 }
 
+func RemoveApartment(apartment *models.Apartment) error {
+	var ctx, _ = context.WithTimeout(context.TODO(), 100*time.Second)
+	var upd bson.D
+	building, err := GetBuildingByID(&apartment.Building_id)
+
+	filter := bson.D{{Key: "_id", Value: building.ID}}
+
+	// building.Apartments = append(building.Apartments, apartment.ID.Hex())
+	for i := range building.Apartments {
+		if building.Apartments[i] == apartment.ID.Hex() {
+			RemoveIndex(building.Apartments, i)
+			break
+		}
+	}
+
+	upd = bson.D{
+		primitive.E{Key: "apartments", Value: building.Apartments},
+	}
+	updater := bson.D{primitive.E{Key: "$set", Value: upd}}
+	_, err = buildingCollection.UpdateOne(ctx, filter, updater)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func min(a, b int) int {
 	if a < b {
 		return a
@@ -199,4 +225,8 @@ func max(a, b int) int {
 		return a
 	}
 	return b
+}
+
+func RemoveIndex(s []string, index int) []string {
+	return append(s[:index], s[index+1:]...)
 }

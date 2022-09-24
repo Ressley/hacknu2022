@@ -50,5 +50,8 @@ func DeleteApartment(response http.ResponseWriter, request *http.Request) {
 		response.Write([]byte(`{"Error":"apartment with ` + id + ` id does not exist"}`))
 		return
 	}
+
+	err = services.RemoveApartment(&apartment)
+
 	err = services.DeleteApartment(&(apartment.ID))
 }
