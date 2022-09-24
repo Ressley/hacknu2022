@@ -16,7 +16,7 @@ type Building struct {
 	Floors       *int               `json:"floors" validate:"required"`
 	Neighborhood []string           `json:"neighborhood"`
 	Apartments   []string           `json:"apartments"`
-	Photo        []PhotoData        `json:"photo"`
+	Photo        []string           `json:"photo"`
 }
 
 type BuildingResponse struct {
@@ -30,7 +30,7 @@ type BuildingResponse struct {
 	Area         string                `json:"area"`
 	MinPrice     *int                  `json:"min_price"`
 	Neighborhood []string              `json:"neighborhood"`
-	Photo        []PhotoData           `json:"photo"`
+	Photo        []string              `json:"photo"`
 	Apartments   [][]ApartmentResponse `json:"apartments"`
 }
 
