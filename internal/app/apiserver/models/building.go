@@ -13,8 +13,8 @@ type Building struct {
 	Longitude    *string            `json:"longitude" validate:"required"`
 	Created_at   time.Time          `json:"created_at" validate:"required"`
 	Ends_at      time.Time          `json:"ends_at" validate:"required"`
-	Neighborhood []string           `bson:"neighborhood, omitempty"`
-	Apartments   []string           `bson:"apartments, omitempty"`
+	Neighborhood []string           `json:"neighborhood"`
+	Apartments   []string           `json:"apartments"`
 }
 
 type BuildingMeta struct {
