@@ -35,7 +35,7 @@ type BuildingResponse struct {
 }
 
 type BuildingMeta struct {
-	ID        string `json:"id"`
-	Latitude  string `json:"latitude"`
-	Longitude string `json:"longitude"`
+	ID        string  `json:"id"`
+	Latitude  float64 `json:"latitude"`
+	Longitude float64 `json:"longitude"`
 }
