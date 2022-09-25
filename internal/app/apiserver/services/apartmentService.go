@@ -51,6 +51,7 @@ func AppendApartmentPhoto(apartment *models.Apartment, fileId *string, _type *st
 	link := "http://" + helpers.HOST + ":8080/download/photo?fileid=" + fmt.Sprint(*fileId)
 	photo := models.PhotoData{
 		Type: _type,
+		Name: name,
 		Link: &link,
 	}
 	apartment.Photo = append(apartment.Photo, photo)
