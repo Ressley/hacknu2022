@@ -58,6 +58,7 @@ func (s *APIserver) configureRouter() {
 	s.router.HandleFunc("/download/photo", controllers.DownloadPhoto).Methods("GET")
 	s.router.HandleFunc("/upload/photo", controllers.UploadPhoto).Methods("POST")
 	s.router.HandleFunc("/download/file", controllers.DownloadFile).Methods("GET")
+	s.router.HandleFunc("/photo", controllers.DeletePhoto).Methods("DELETE")
 	s.router.HandleFunc("/upload/file", controllers.UploadFile).Methods("POST")
 	s.router.HandleFunc("/building", controllers.CreateBuilding).Methods("POST")
 	s.router.HandleFunc("/building", controllers.DeleteBuilding).Methods("DELETE")

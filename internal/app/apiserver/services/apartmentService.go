@@ -76,3 +76,27 @@ func DeleteApartment(id *primitive.ObjectID) error {
 	}
 	return nil
 }
+
+func RemoveApartmentPhoto(apartment *models.Apartment, fileId *string) error {
+	var ctx, _ = context.WithTimeout(context.TODO(), 100*time.Second)
+	var upd bson.D
+
+	filter := bson.D{{Key: "_id", Value: apartment.ID}}
+	link := "http://" + helpers.HOST + ":8080/download/photo?fileid=" + fmt.Sprint(*fileId)
+	for i := range apartment.Photo {
+		if *apartment.Photo[i].Link == link {
+			apartment.Photo = RemoveIndex(apartment.Photo, i)
+			break
+		}
+	}
+
+	upd = bson.D{
+		primitive.E{Key: "photo", Value: apartment.Photo},
+	}
+	updater := bson.D{primitive.E{Key: "$set", Value: upd}}
+	_, err = apartmentCollection.UpdateOne(ctx, filter, updater)
+	if err != nil {
+		return err
+	}
+	return nil
+}

@@ -60,3 +60,19 @@ func DownloadPhoto(response http.ResponseWriter, request *http.Request) {
 	}
 	response.Write(bytes)
 }
+
+func DeletePhoto(response http.ResponseWriter, request *http.Request) {
+
+	query := request.URL.Query()
+	id := query.Get("id")
+	fileId := query.Get("fileid")
+
+	building, err := services.GetBuildingByID(&id)
+	if err == nil {
+		services.RemoveBuildingPhoto(building, &fileId)
+	}
+	apartment, err := services.GetApartmentByID(&id)
+	if err == nil {
+		services.RemoveApartmentPhoto(&apartment, &fileId)
+	}
+}

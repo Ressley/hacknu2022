@@ -197,13 +197,37 @@ func RemoveApartment(apartment *models.Apartment) error {
 	// building.Apartments = append(building.Apartments, apartment.ID.Hex())
 	for i := range building.Apartments {
 		if building.Apartments[i] == apartment.ID.Hex() {
-			RemoveIndex(building.Apartments, i)
+			building.Apartments = RemoveIndex(building.Apartments, i)
 			break
 		}
 	}
 
 	upd = bson.D{
 		primitive.E{Key: "apartments", Value: building.Apartments},
+	}
+	updater := bson.D{primitive.E{Key: "$set", Value: upd}}
+	_, err = buildingCollection.UpdateOne(ctx, filter, updater)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func RemoveBuildingPhoto(building models.Building, fileId *string) error {
+	var ctx, _ = context.WithTimeout(context.TODO(), 100*time.Second)
+	var upd bson.D
+
+	filter := bson.D{{Key: "_id", Value: building.ID}}
+	link := "http://" + helpers.HOST + ":8080/download/photo?fileid=" + fmt.Sprint(*fileId)
+	for i := range building.Photo {
+		if building.Photo[i] == link {
+			building.Photo = RemoveIndex(building.Photo, i)
+			break
+		}
+	}
+
+	upd = bson.D{
+		primitive.E{Key: "photo", Value: building.Photo},
 	}
 	updater := bson.D{primitive.E{Key: "$set", Value: upd}}
 	_, err = buildingCollection.UpdateOne(ctx, filter, updater)
@@ -227,6 +251,6 @@ func max(a, b int) int {
 	return b
 }
 
-func RemoveIndex(s []string, index int) []string {
+func RemoveIndex[T any](s []T, index int) []T {
 	return append(s[:index], s[index+1:]...)
 }
